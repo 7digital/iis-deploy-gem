@@ -19,10 +19,15 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
     "Gemfile",
+    "Gemfile.lock",
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
-    "VERSION"
+    "VERSION",
+    "lib/web_site_identifier.rb",
+    "sevendigital-deploy.gemspec",
+    "spec/support/spec_helper.rb",
+    "spec/web_site_identifier_spec.rb"
   ]
   s.homepage = "http://github.com/henryoswald/sevendigital-deploy"
   s.licenses = ["MIT"]
