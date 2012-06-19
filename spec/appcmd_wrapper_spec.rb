@@ -2,7 +2,6 @@ require 'rake'
 
 #SET appcmd="C:\windows\System32\inetsrv\appcmd.exe"
 
-#%appcmd% ADD APPPOOL /name:%sitename% /managedRuntimeVersion:v4.0
 #%appcmd% ADD SITE /name:%sitename% /bindings:"http://www.7digital.local:80" /physicalPath:"c:\work\sevendigital-com\src\SevenDigital.Com.Web"
 #%appcmd% SET SITE /site.name:%sitename% /applicationDefaults.applicationPool:%sitename%
 #C:\Program Files (x86)\IIS Resources\SelfSSL>selfssl.exe /T /N:CN=7digital.com /S:13 /Q
@@ -51,6 +50,10 @@ describe AppcmdWrapper do
 			@appcmdWrapper.Create(siteName,"a/path")
 		end
 
+		it 'should create a new site' do
+			expect_shell_with_parameter("#{appcmdPath} ADD SITE /name:#{siteName} /physicalPath:#{sitePath}")
+			@appcmdWrapper.Create(siteName,"a/path")
+		end
 
 		private 
 		def expect_shell_with_parameter(parameter)
