@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "sevendigital-deploy"
   gem.homepage = "http://github.com/henryoswald/sevendigital-deploy"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{deploy iis sites}
+  gem.description = %Q{deploy iis sites}
   gem.email = "henry.oswald@7digital.com"
   gem.authors = ["Henry Oswald"]
   # dependencies defined in Gemfile
