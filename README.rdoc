@@ -1,6 +1,6 @@
 = sevendigital-deploy
 
-Description goes here.
+Deploy dot net
 
 == Contributing to sevendigital-deploy
  
