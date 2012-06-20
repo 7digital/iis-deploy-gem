@@ -3,7 +3,7 @@ require 'IIS_apppool_builder'
 
 describe IISAppPoolBuilder do
 	siteName = "7digital.com"
-	appcmdPath = "%windir%\\system32\\inetsrc\\appcmd.exe"
+	appcmdPath = "%windir%\\system32\\inetsrv\\appcmd.exe"
 
 	before(:each) do 
 		@iisAppPoolBuilder = IISAppPoolBuilder.new(siteName)

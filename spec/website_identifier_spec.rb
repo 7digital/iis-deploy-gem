@@ -3,6 +3,13 @@ require 'web_site_identifier'
 
 describe WebSiteIdentifier do
 	siteName = "7digital.com"
+	listOfSites = "
+				SITE \"territoriesApi\" (id:3,bindings:http/*:80:territoriesapi,state:Started)
+				SITE \"#{siteName}\" (id:1,bindings:http/*:80:sevenspace.local,net.tcp/808:*,net.pipe/*,net.msmq/localhost,msmq.formatname/localhost,state:Stopped)
+				SITE \"SevenDigital.Web.Stores\" (id:5,bindings:http/*:80:stores.7digital.local,http/*:80:,state:Stopped)
+				SITE \"mailout\" (id:6,bindings:http/*:80:mailout.7digital.locallocal,state:Stopped)
+				"
+
 
 	before(:each) do
 		@webSiteIdentifier = WebSiteIdentifier.new
@@ -23,15 +30,16 @@ describe WebSiteIdentifier do
 	end
 
 	context 'given a website name' do
-		it 'calls appcmd list website' do
-			expect_shell_with_parameter("%windir%\\system32\\inetsrc\\appcmd.exe LIST SITE /site.name:#{siteName}")
-			@webSiteIdentifier.getId(siteName)
+		it 'can check the website when exists' do
+			@webSiteIdentifier.stubs(:sh).with("%windir%\\system32\\inetsrv\\appcmd.exe LIST SITE").returns(listOfSites)
+			@webSiteIdentifier.exists(siteName).should be_true
+		end
+
+		it 'can check the website when it does not exist' do
+			@webSiteIdentifier.stubs(:sh).with("%windir%\\system32\\inetsrv\\appcmd.exe LIST SITE").returns(listOfSites)
+			@webSiteIdentifier.exists("dsadsadas").should be_false
 		end
 	end
-
-	private
-	def expect_shell_with_parameter(parameter)
-		@webSiteIdentifier.expects(:sh).with(parameter).once.returns('SITE "7digital.com" (id:13,bindings:http/*:80:www.7digital.local,https/:443:,state:Started)')
-		@webSiteIdentifier.stubs(:sh).with(Not(equals(parameter)))
-	end
 end
+
+

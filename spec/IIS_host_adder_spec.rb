@@ -2,7 +2,7 @@ require 'IIS_host_adder'
 
 describe IISHostAdder do
 	siteName = "7digital.com"
-	appcmdPath = "%windir%\\system32\\inetsrc\\appcmd.exe"
+	appcmdPath = "%windir%\\system32\\inetsrv\\appcmd.exe"
 
 	context 'adding a host entry' do
 
