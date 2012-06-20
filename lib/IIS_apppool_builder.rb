@@ -1,7 +1,9 @@
 require 'rake'
 
+# Used to manage IIS App Pool
 class IISAppPoolBuilder
-	
+	# Params:
+	# +siteName+:: siteName string used to identify site (e.g 7digital.com)
 	def initialize(siteName)
 		@siteName = siteName	
 	end

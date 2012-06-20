@@ -2,8 +2,6 @@ require 'rake'
 require 'web_site_identifier'
 
 class IISSelfSigning
-	attr_accessor :webSiteIdentifier
-
 	def initialize(siteName, webSiteIdentifier = WebSiteIdentifier.new)
 		@siteName = siteName
 		@webSiteIdentifier = webSiteIdentifier
