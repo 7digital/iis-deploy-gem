@@ -7,6 +7,7 @@ describe WebSiteIdentifier do
 	before(:each) do
 		@webSiteIdentifier = WebSiteIdentifier.new
 	end
+	
 	context 'Given an appcmd result' do	
 		it 'gets website identifier' do
 			@webSiteIdentifier.stubs(:sh).with(includes(siteName)).returns('SITE "7digital.com" (id:13,bindings:http/*:80:www.7digital.local,https/:443:,state:Started)')

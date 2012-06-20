@@ -1,7 +1,7 @@
 require 'rake'
 
 class WebSiteIdentifier
-	
+
 	def getId(siteName)
 		siteInfo = sh "%windir%\\system32\\inetsrc\\appcmd.exe LIST SITE /site.name:#{siteName}"
 		parseId(siteInfo)
