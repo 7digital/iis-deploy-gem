@@ -5,12 +5,12 @@
 
 Gem::Specification.new do |s|
   s.name = "sevendigital-deploy"
-  s.version = "0.0.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Henry Oswald"]
-  s.date = "2012-06-19"
-  s.description = "TODO: longer description of your gem"
+  s.date = "2012-06-20"
+  s.description = "deploy iis sites"
   s.email = "henry.oswald@7digital.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -24,16 +24,24 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "lib/IIS_apppool_builder.rb",
+    "lib/IIS_host_adder.rb",
+    "lib/IIS_self_signer.rb",
+    "lib/IIS_site_builder.rb",
     "lib/web_site_identifier.rb",
     "sevendigital-deploy.gemspec",
+    "spec/IIS_apppool_builder_spec.rb",
+    "spec/IIS_host_adder_spec.rb",
+    "spec/IIS_self_signer_spec.rb",
+    "spec/IIS_site_builder_spec.rb",
     "spec/support/spec_helper.rb",
-    "spec/web_site_identifier_spec.rb"
+    "spec/website_identifier_spec.rb"
   ]
   s.homepage = "http://github.com/henryoswald/sevendigital-deploy"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.24"
-  s.summary = "TODO: one-line summary of your gem"
+  s.summary = "deploy iis sites"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
