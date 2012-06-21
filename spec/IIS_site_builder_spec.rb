@@ -9,39 +9,39 @@ describe IISSiteBuilder do
 	before(:each) do 
 		@webSiteIdentifier = mock()
 		@webSiteIdentifier.stubs(:exists).returns(true)
-		@iisSiteBuilder = IISSiteBuilder.new(siteName, sitePath, @webSiteIdentifier)
+		@iisAppCmd = mock()
+		@iisSiteBuilder = IISSiteBuilder.new(siteName, sitePath, @webSiteIdentifier, @iisAppCmd)
 	end
-	
 	
 	context 'deploying a site to iis' do	
 		it 'is fluent' do
-			@iisSiteBuilder.expects(:sh).with(includes(appcmdPath)).times 2
+			@iisAppCmd.expects(:execute).with(includes(appcmdPath)).times 2
 			@iisSiteBuilder.delete().create()
 		end
 
 		it 'creates a new site' do
-			expect_shell_with_parameter("#{appcmdPath} ADD SITE /name:#{siteName} /physicalPath:#{sitePath}")
+			@iisAppCmd.expects(:execute).with("#{appcmdPath} ADD SITE /name:#{siteName} /bindings:http://#{siteName}:80 /physicalPath:#{sitePath}")
 			@iisSiteBuilder.create()
 		end
 	end
 
-	context 'deleteing website' do
+	context 'creating a new iis site builder' do
+		it 'create its own webSiteIdentifier' do
+			siteBuilder = IISSiteBuilder.new(siteName, sitePath)
+			siteBuilder.webSiteIdentifier.should_not == nil
+		end
+	end
 
+	context 'deleteing website' do
 		it 'tears down the old site' do
-			expect_shell_with_parameter("#{appcmdPath} DELETE SITE #{siteName}")
+			@iisAppCmd.expects(:execute).with("#{appcmdPath} DELETE SITE #{siteName}")
 			@iisSiteBuilder.delete()
 		end
 
 		it 'does not tear down the website if it exists'  do
 			@webSiteIdentifier.stubs(:exists).returns(false)
-			@iisSiteBuilder.expects(:sh).with("#{appcmdPath} DELETE SITE #{siteName}").never
+			@iisAppCmd.expects(:execute).with("#{appcmdPath} DELETE SITE #{siteName}").never
 			@iisSiteBuilder.delete()
 		end
-	end
-	
-	private
-	def expect_shell_with_parameter(parameter)
-		@iisSiteBuilder.expects(:sh).with(parameter).once
-		@iisSiteBuilder.stubs(:sh).with(Not(equals(parameter)))
 	end
 end

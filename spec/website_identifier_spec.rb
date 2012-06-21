@@ -10,20 +10,20 @@ describe WebSiteIdentifier do
 				SITE \"mailout\" (id:6,bindings:http/*:80:mailout.7digital.locallocal,state:Stopped)
 				"
 
-
 	before(:each) do
-		@webSiteIdentifier = WebSiteIdentifier.new
+		@iisAppCmd = mock()
+		@webSiteIdentifier = WebSiteIdentifier.new(@iisAppCmd)
 	end
 	
 	context 'Given an appcmd result' do	
 		it 'gets website identifier' do
-			@webSiteIdentifier.stubs(:sh).with(includes(siteName)).returns('SITE "7digital.com" (id:13,bindings:http/*:80:www.7digital.local,https/:443:,state:Started)')
+			@iisAppCmd.expects(:execute).with("LIST SITE /site.name:#{siteName}").returns('SITE "7digital.com" (id:13,bindings:http/*:80:www.7digital.local,https/:443:,state:Started)')
 			result = @webSiteIdentifier.getId(siteName)
 			result.should == "13" 
 		end
 
 		it 'gets website identifier with big number' do
-			@webSiteIdentifier.stubs(:sh).with(includes(siteName)).returns('SITE "7digital.com" (id:123333,bindings:http/*:80:www.7digital.local,https/:443:,state:Started)')
+			@iisAppCmd.expects(:execute).with("LIST SITE /site.name:#{siteName}").returns('SITE "7digital.com" (id:123333,bindings:http/*:80:www.7digital.local,https/:443:,state:Started)')
 			result = @webSiteIdentifier.getId(siteName)
 			result.should == "123333" 
 		end
@@ -31,12 +31,12 @@ describe WebSiteIdentifier do
 
 	context 'given a website name' do
 		it 'can check the website when exists' do
-			@webSiteIdentifier.stubs(:sh).with("%windir%\\system32\\inetsrv\\appcmd.exe LIST SITE").returns(listOfSites)
+			@iisAppCmd.expects(:execute).with("LIST SITE").returns(listOfSites)
 			@webSiteIdentifier.exists(siteName).should be_true
 		end
 
 		it 'can check the website when it does not exist' do
-			@webSiteIdentifier.stubs(:sh).with("%windir%\\system32\\inetsrv\\appcmd.exe LIST SITE").returns(listOfSites)
+			@iisAppCmd.expects(:execute).with("LIST SITE").returns(listOfSites)
 			@webSiteIdentifier.exists("dsadsadas").should be_false
 		end
 	end

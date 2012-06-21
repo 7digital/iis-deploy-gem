@@ -1,26 +1,31 @@
 require 'rake'
+require 'IIS_appcmd'
 
 # Used to manage IIS App Pool
 
 class IISAppPoolBuilder
 	# Params:
 	# +siteName+:: siteName string used to identify site (e.g)
-	def initialize(siteName)
+	def initialize(siteName, iisAppCmd = IISAppcmd.new)
 		@siteName = siteName	
+		@iisAppCmd = iisAppCmd
 	end
 
 	def create
-		sh "%windir%\\system32\\inetsrv\\appcmd.exe ADD APPPOOL /name:#{@siteName} /managedRuntimeVersion:v4.0"
+		puts "creating app pool : #{@siteName}"
+		@iisAppCmd.execute("ADD APPPOOL /name:#{@siteName} /managedRuntimeVersion:v4.0")
 		self
 	end
 	
 	def delete
-		sh "%windir%\\system32\\inetsrv\\appcmd.exe DELETE APPPOOL #{@siteName}"
+		puts "deleting app pool : #{@siteName}"
+		@iisAppCmd.execute("DELETE APPPOOL #{@siteName}")
 		self
 	end
 
 	def assign
-		sh "%windir%\\system32\\inetsrv\\appcmd.exe SET SITE /site.name:#{@siteName} /applicationDefaults.applicationPool:#{@siteName}"
+		puts "assigning app pool : #{@siteName} to site #{@siteName}"
+		@iisAppCmd.execute("SET SITE /site.name:#{@siteName} /applicationDefaults.applicationPool:#{@siteName}")
 		self
 	end
 end

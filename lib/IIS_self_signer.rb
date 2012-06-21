@@ -9,6 +9,6 @@ class IISSelfSigning
 
 	def sign
 		@siteId = @webSiteIdentifier.getId(@siteName)
-		sh "%programfiles(x86)%\\IIS Resources\\SelfSSL\\selfssl.exe /T /N:CN=#{@siteName} /S:#{@siteId} /Q"
+		`%programfiles(x86)%\\IIS Resources\\SelfSSL\\selfssl.exe /T /N:CN=#{@siteName} /S:#{@siteId} /Q`
 	end
 end

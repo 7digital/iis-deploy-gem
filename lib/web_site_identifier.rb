@@ -1,14 +1,21 @@
 require 'rake'
+require 'IIS_appcmd'
 
 class WebSiteIdentifier
+
+	def initialize(iisAppCmd = IISAppCmd.new)
+		@iisAppCmd = iisAppCmd
+	end
+	
 	def exists(siteName)
-		siteInfo = sh "%windir%\\system32\\inetsrv\\appcmd.exe LIST SITE"
+		siteInfo = @iisAppCmd.execute("LIST SITE")
 		siteExits = siteInfo.include?(siteName)
+		puts "checking if site #{siteName} exists : #{siteExits}"
 		siteExits
 	end
 
 	def getId(siteName)
-		siteInfo = sh "%windir%\\system32\\inetsrv\\appcmd.exe LIST SITE /site.name:#{siteName}"
+		siteInfo = @iisAppCmd.execute("LIST SITE /site.name:#{siteName}")
 		parseId(siteInfo)
 	end
 

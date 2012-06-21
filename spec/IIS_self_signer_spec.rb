@@ -23,7 +23,7 @@ describe IISSelfSigning do
 
 	private
 	def expect_shell_with_parameter(parameter)
-		@iisSelfSigner.expects(:sh).with(parameter).once
-		@iisSelfSigner.stubs(:sh).with(Not(equals(parameter)))
+		@iisSelfSigner.expects(:`).with(parameter).once
+		@iisSelfSigner.stubs(:`).with(Not(equals(parameter)))
 	end
 end
