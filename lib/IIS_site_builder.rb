@@ -15,7 +15,7 @@ class IISSiteBuilder
 	def delete
 		puts "attempting delete of #{@siteName}"
 		if @webSiteIdentifier.exists(@siteName)
-			@iisAppCmd.execute("%windir%\\system32\\inetsrv\\appcmd.exe DELETE SITE #{@siteName}")
+			@iisAppCmd.execute("DELETE SITE #{@siteName}")
 			puts "deleted site #{@siteName}"
 		end
 		self
@@ -23,7 +23,7 @@ class IISSiteBuilder
 
 	def create
 		puts "creating site #{@siteName}"
-		@iisAppCmd.execute("%windir%\\system32\\inetsrv\\appcmd.exe ADD SITE /name:#{@siteName} /bindings:http://#{@siteName}:80 /physicalPath:#{@sitePath}")
+		@iisAppCmd.execute("ADD SITE /name:#{@siteName} /bindings:http://#{@siteName}:80 /physicalPath:#{@sitePath}")
 		self
 	end
 end

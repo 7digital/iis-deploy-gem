@@ -1,5 +1,7 @@
 class IISAppCmd
 	def execute(arugment)
-		`c:\\windows\\system32\\inetsrv\\appcmd.exe #{arugment}`
+		response = `c:\\windows\\system32\\inetsrv\\appcmd.exe #{arugment}`
+		#puts response
+		response
 	end
 end

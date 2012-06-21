@@ -11,13 +11,13 @@ describe IISHostAdder do
 		end
 
 		it 'add sucessfully' do
-			hostEntry = "www.7digital.com"
-			@iisAppcmd.expects(:execute).with("SET CONFIG -section:system.applicationHost/sites /+\"[name='#{siteName}'].bindings.[protocol='http',bindingInformation='*:80:#{hostEntry}']\" /commit:apphost']")
+			hostEntry = "4143:www.7digital.com"
+			@iisAppcmd.expects(:execute).with("SET CONFIG -section:system.applicationHost/sites /+\"[name='#{siteName}'].bindings.[protocol='http',bindingInformation='*:#{hostEntry}']\" /commit:apphost")
 			@iisHostAdder.addSingle(hostEntry)
 		end
 
 		it 'should add multiple sites when using array' do
-			hostEntrys = ["de.7digital.com", "fr.7digital.com", "ie.7digital.com"]
+			hostEntrys = ["80:de.7digital.com", "1443:fr.7digital.com", "44443:ie.7digital.com"]
 			@iisAppcmd.expects(:execute).with(includes(hostEntrys[0]))
 			@iisAppcmd.expects(:execute).with(includes(hostEntrys[1]))
 			@iisAppcmd.expects(:execute).with(includes(hostEntrys[2]))

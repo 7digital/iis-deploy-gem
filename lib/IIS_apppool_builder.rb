@@ -6,7 +6,7 @@ require 'IIS_appcmd'
 class IISAppPoolBuilder
 	# Params:
 	# +siteName+:: siteName string used to identify site (e.g)
-	def initialize(siteName, iisAppCmd = IISAppcmd.new)
+	def initialize(siteName, iisAppCmd = IISAppCmd.new)
 		@siteName = siteName	
 		@iisAppCmd = iisAppCmd
 	end

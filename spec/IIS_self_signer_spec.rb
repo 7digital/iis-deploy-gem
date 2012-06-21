@@ -1,7 +1,7 @@
 require 'support/spec_helper'
 require 'IIS_self_signer'
 
-describe IISSelfSigning do
+describe IISSelfSigner do
 	context 'self signing iis site' do
 		selfSignPath = "%programfiles(x86)%\\IIS Resources\\SelfSSL\\selfssl.exe"
 		siteName = "7digital.com"
@@ -11,19 +11,12 @@ describe IISSelfSigning do
 			webSiteIdentifier = mock()
 			webSiteIdentifier.stubs(:getId).returns(siteId) 
 			
-			@iisSelfSigner = IISSelfSigning.new(siteName, webSiteIdentifier)
+			@iisSelfSigner = IISSelfSigner.new(siteName, webSiteIdentifier)
 		end
 
 		it 'self signs site' do
-			expect_shell_with_parameter("#{selfSignPath} /T /N:CN=#{siteName} /S:#{siteId} /Q")
+			@iisSelfSigner.expects(:`).with(includes("/S:#{siteId} /Q")).once
 			@iisSelfSigner.sign
 		end
-
-	end
-
-	private
-	def expect_shell_with_parameter(parameter)
-		@iisSelfSigner.expects(:`).with(parameter).once
-		@iisSelfSigner.stubs(:`).with(Not(equals(parameter)))
 	end
 end
