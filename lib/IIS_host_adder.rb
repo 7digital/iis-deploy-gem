@@ -7,7 +7,7 @@ class IISHostAdder
 	end
 
 	def addSingle(host)
-		puts "adding host #{host} to site #{@siteName}"
+		#puts "adding host #{host} to site #{@siteName}"
 		@iisAppCmd.execute("SET CONFIG -section:system.applicationHost/sites /+\"[name='#{@siteName}'].bindings.[protocol='http',bindingInformation='*:#{host}']\" /commit:apphost")
 	end
 
