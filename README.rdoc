@@ -1,4 +1,4 @@
-= sevendigital-deploy
+= [Deprecated] sevendigital-deploy
 
 Deploy dot net
 
